@@ -5,10 +5,12 @@
 class TestObject
 {
 	private:
+		static const int STR_LEN = 10;
+
 		const char *name;
 		int num;
 		float fnum;
-		char str[10];
+		char str[STR_LEN + 1];
 	public:
 		TestObject(const char *name);
 		virtual ~TestObject(){};

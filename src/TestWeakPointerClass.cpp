@@ -1,10 +1,3 @@
-/*
- * TestWeakPointerClass.cpp
- *
- *  Created on: 12 dic 2024
- *      Author: Mario
- */
-
 #include "TestWeakPointerClass.h"
 
 Manager::Manager(const std::string &name) : name (name)

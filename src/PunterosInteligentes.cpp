@@ -42,28 +42,28 @@ void sharedTest2()
 	p1->print();
 	p2->print();
 
-	cout << "----- Contador de usos -----" << endl;
-	cout << p1.use_count() << endl;
-	cout << p2.use_count() << endl;
-	cout << p3.use_count() << endl;
+	cout << "Contador de usos:" << endl;
+	cout << "p1: " << p1.use_count() << endl;
+	cout << "p2: " << p2.use_count() << endl;
+	cout << "p3: " << p3.use_count() << endl;
 
-	cout << "----- Chequeo de punteros -----" << endl;
-	cout << "p1 y p3 comparten objeto apuntado: " << (p1 == p3) << endl;
-	cout << "p1 y p2 comparten objeto apuntado: " << (p1 == p2) << endl;
-	cout << "p2 y p3 comparten objeto apuntado: " << (p2 == p3) << endl;
+	cout << "Chequeo de punteros:" << endl;
+	cout << "p1 y p2 comparten objeto apuntado: " << ((p1 == p2) ? "si" : "no") << endl;
+	cout << "p1 y p3 comparten objeto apuntado: " << ((p1 == p3) ? "si" : "no") << endl;
+	cout << "p2 y p3 comparten objeto apuntado: " << ((p2 == p3) ? "si" : "no") << endl;
 
-	cout << "----- Intercambio de punteros -----" << endl;
+	cout << "----- Intercambio de punteros p1 y p2 -----" << endl;
 	p1.swap(p2);
 
-	cout << "----- Contador de usos -----" << endl;
-	cout << p1.use_count() << endl;
-	cout << p2.use_count() << endl;
-	cout << p3.use_count() << endl;
+	cout << "Contador de usos:" << endl;
+	cout << "p1: " << p1.use_count() << endl;
+	cout << "p2: " << p2.use_count() << endl;
+	cout << "p3: " << p3.use_count() << endl;
 
-	cout << "----- Chequeo de punteros -----" << endl;
-	cout << "p1 y p3 comparten objeto apuntado: " << (p1 == p3) << endl;
-	cout << "p1 y p2 comparten objeto apuntado: " << (p1 == p2) << endl;
-	cout << "p2 y p3 comparten objeto apuntado: " << (p2 == p3) << endl;
+	cout << "Chequeo de punteros:" << endl;
+	cout << "p1 y p2 comparten objeto apuntado: " << ((p1 == p2) ? "si" : "no") << endl;
+	cout << "p1 y p3 comparten objeto apuntado: " << ((p1 == p3) ? "si" : "no") << endl;
+	cout << "p2 y p3 comparten objeto apuntado: " << ((p2 == p3) ? "si" : "no") << endl;
 }
 void sharedTest1()
 {
@@ -94,7 +94,7 @@ void sharedTest1()
     // Resetear el contador de p1, volviendo el puntero NULL
 	cout << "----- Reseteo de uno de los punteros compartidos, bajando el contador de usos -----" << endl;
     p1.reset();
-    cout << p1.get() << endl; 			// NULL o 0
+    cout << "Dir de p1: " << p1.get() << endl; 			// NULL o 0
     cout << p2.use_count() << endl;
     cout << p3.use_count() << endl;
 }
@@ -104,49 +104,51 @@ void uniqueTest()
 	cout << "----- Test unique_ptr -----" << endl;
 
 	// Dos punteros unicos a entero
-	std::unique_ptr<int> ptr1(new int(17));
-	std::unique_ptr<int> ptr2(new int(33));
+	std::unique_ptr<int> pInt1(new int(17));
+	std::unique_ptr<int> pInt2(new int(33));
 
 	// Mostrar
-	cout << *ptr1 << " / " << *ptr2 << endl;
+	cout << "int1: " << *pInt1 << " / int2: " << *pInt2 << endl;
+	cout << "Dir int1: " << pInt1.get() << " / Dir int2: " << pInt2.get() << endl;
 
-	// Intercambiar
-	std::unique_ptr<int> aux(std::move(ptr1));
-	ptr1 = std::move(ptr2);
-	ptr2 = std::move(aux);
+	// Intercambiar con move
+	cout << "----- Intercambiar con move -----" << endl;
 
-	// Mostrar
-	cout << *ptr1 << " / " << *ptr2 << endl;
+	std::unique_ptr<int> pInt3(std::move(pInt1));
+	pInt1 = std::move(pInt2);
+	pInt2 = std::move(pInt3);
+
+	cout << "int1: " << *pInt1 << " / int2: " << *pInt2 << endl;
 
 	// Array de doubles al azar
-	std::unique_ptr<double[]> arr(new double[5]());
+	cout << "----- Array -----" << endl;
 
+	std::unique_ptr<double[]> arr(new double[5]());
 	for(int i = 0; i < 5; ++i)
 	{
 		arr[i] =  20*((double)rand())/RAND_MAX;
 	}
-	// Mostrar
 	for(int i = 0; i < 5; ++i)
 	{
 		cout << arr[i] << endl;
 	}
 
 	// Objetos
-	std::unique_ptr<TestObject> pO1(new TestObject("Obj1"));
-	std::unique_ptr<TestObject> pO2(new TestObject("Obj2"));
+	cout << "----- Intercambiar con swap -----" << endl;
+
+	std::unique_ptr<TestObject> p1(new TestObject("Obj1"));
+	std::unique_ptr<TestObject> p2(new TestObject("Obj2"));
 
 	// Mostrar
-	cout << "Punteros a los objetos originales" << endl;
-	pO1->print();
-	pO2->print();
+	cout << "Punteros a los objetos originales:" << endl;
+	p1->print();
+	p2->print();
 
-	// Intercambiar
-	std::unique_ptr<TestObject> pO3(std::move(pO1));
-	pO1 = std::move(pO2);
-	pO2 = std::move(pO3);
+	// Intercambiar con swap
+	p1.swap(p2);
 
 	// Mostrar
-	cout << "Punteros intercambiados" << endl;
-	pO1->print();
-	pO2->print();
+	cout << "Punteros intercambiados:" << endl;
+	p1->print();
+	p2->print();
 }
