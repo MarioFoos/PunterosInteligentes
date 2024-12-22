@@ -6,14 +6,16 @@ using namespace std;
 
 TestObject::TestObject(const char *name)
 {
-	srand(reinterpret_cast<uintptr_t>(name));
+	int *temp = new int;
+	srand(reinterpret_cast<uintptr_t>(temp));
+	delete temp;
 
 	this->name = name;
 	num = rand()%20;
 	fnum = 15*((double)rand())/RAND_MAX;
 	for(int i = 0; i < STR_LEN; ++i)
 	{
-		str[i] = rand()%('z' - 'a' + 1) + 'a';
+		str[i] = (char)(rand()%('z' - 'a' + 1) + 'a');
 	}
 	str[STR_LEN] = 0;
 }
