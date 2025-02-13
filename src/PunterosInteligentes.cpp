@@ -13,9 +13,9 @@ void weakTest();
 
 int main()
 {
-	//uniqueTest();
-	//sharedTest1();
-	//sharedTest2();
+	uniqueTest();
+	sharedTest1();
+	sharedTest2();
 	weakTest();
 
 	return 0;
