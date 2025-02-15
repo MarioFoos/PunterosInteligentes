@@ -1,21 +1,24 @@
 #ifndef TESTOBJECT_H_
 #define TESTOBJECT_H_
 
+#include <iostream>
+
+using namespace std;
+
 // Objeto de prueba con valores aleatorios
 class TestObject
 {
 	private:
-		static const int STR_LEN = 10;
-
 		const char *name;
 		int num;
 		float fnum;
-		char str[STR_LEN + 1];
+		char *str;
+
+		int genRnd(int min, int max);
 	public:
 		TestObject(const char *name);
-		virtual ~TestObject(){};
+		virtual ~TestObject();
 
-		void print();
+		string toString();
 };
-
 #endif /* TESTOBJECT_H_ */
